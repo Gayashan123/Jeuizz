@@ -1,158 +1,126 @@
-import React, { useState } from 'react';
-import logo from "../assets/logo.png";
-import { Link } from 'react-scroll';
-
-import Login from './Login';
-
+import React, { useState } from "react";
+import { Link } from "react-scroll";
+import { useNavigate } from "react-router-dom";
 
 function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [iconShow, setIconshow] = useState(true);
-  const [lopop, setlopop] = useState(false);  // Track whether the login modal should be open
-  
+  const navigate = useNavigate();
 
+  const navLinks = [
+    { to: "header", label: "Home" },
+    { to: "about", label: "About" },
+    { to: "contact", label: "Contact" },
+  ];
 
-  const menuClick = () => {
+  const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
-    setIconshow(!iconShow);
   };
 
-  const openLogin = () => {
-    setlopop(true);  // Open login modal
-    setsignup(false); // Ensure signup modal is closed
-    setIsMenuOpen(false)
+  const closeMenu = () => {
+    setIsMenuOpen(false);
   };
-
-  const openSignup = () => {
-    setsignup(true);  // Open signup modal
-    setlopop(false); // Ensure login modal is closed
-  };
-
-  const closeModals = () => {
-    setlopop(false);
-    setsignup(false); // Close both modals
-  };
-
-
-
-
-
-
-
-
-
-  
 
   return (
-    <div className='fixed top-0 left-0 z-30 w-full'>
-      <div className='flex items-center justify-between px-6 py-4 mx-auto bg-black opacity-65 lg:px-20'>
-        {/* Left side: Logo and Text */}
-        <div className='flex items-center gap-4 '>
-          <img src={logo} alt="Hospital Care Logo" className='h-10 mt-0 bg-yellow-400' />
-          <p className='font-semibold text-white'>Hospital Care</p>
+    <header className="absolute top-0 left-0 z-50 w-full backdrop-blur-md bg-white/80 shadow-sm border-b border-gray-200">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        {/* Logo */}
+        <div className="text-2xl font-extrabold tracking-tight text-gray-900 select-none">
+          Jeuizz Quiz
         </div>
 
-        {/* Right side: Navigation Links */}
-        <div className='items-center hidden gap-6 ml-auto lg:flex'>
-          <ul className='flex text-white gap-7'>
-  <li>
-    <Link
-      to="header"
-      smooth={true}
-      duration={500}
-      className='cursor-pointer hover:text-gray-400'
-    >
-      Home
-    </Link>
-  </li>
-  <li>
-    <Link
-      to="about"
-      smooth={true}
-      duration={500}
-      className='cursor-pointer hover:text-gray-400'
-    >
-      About
-    </Link>
-  </li>
-  <li>
-    <Link
-      to="contact"
-      smooth={true}
-      duration={500}
-      className='cursor-pointer hover:text-gray-400'
-    >
-      Contact Us
-    </Link>
-  </li>
-  <li>
-    <Link
-      to="services"
-      smooth={true}
-      duration={500}
-      className='cursor-pointer hover:text-gray-400'
-    >
-      Services
-    </Link>
-  </li>
-</ul>
+        {/* Desktop Navigation */}
+        <nav className="hidden lg:flex items-center gap-10">
+          {navLinks.map(({ to, label }) => (
+            <Link
+              key={to}
+              to={to}
+              smooth
+              duration={400}
+              spy
+              offset={-60}
+              activeClass="text-teal-600 font-semibold border-b-2 border-teal-600"
+              className="text-gray-900 hover:text-teal-600 cursor-pointer transition-all duration-200 pb-1"
+            >
+              {label}
+            </Link>
+          ))}
 
+          <button
+            onClick={() => navigate("/loginpage")}
+            className="ml-6 px-6 py-2 rounded-full bg-teal-600 text-white font-semibold hover:bg-teal-700 transition duration-300 shadow-md"
+          >
+            Logout
+          </button>
+        </nav>
 
-          {/* Buttons */}
-          <div className='flex gap-4'>
-            <button className='px-6 py-2 font-semibold text-gray-800 uppercase bg-white rounded-full hover:bg-gray-200' onClick={openLogin}>
-              Sign in
-            </button>
-           
-          </div>
-        </div>
+        {/* Mobile Menu Toggle */}
+        <div className="lg:hidden flex items-center gap-4">
+          <button
+            onClick={() => navigate("/loginpage")}
+            className="px-5 py-2 rounded-full bg-teal-600 text-white font-semibold hover:bg-teal-700 transition duration-300 shadow-md"
+          >
+            Logout
+          </button>
 
-        {/* Hamburger Menu */}
-        {iconShow && (
-          <div className='flex lg:hidden'>
-            <button className='text-white' onClick={menuClick}>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-8 h-8">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          <button
+            className="text-gray-900 focus:outline-none"
+            onClick={toggleMenu}
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          >
+            {isMenuOpen ? (
+              <svg
+                className="w-7 h-7"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M6 18L18 6M6 6l12 12" />
               </svg>
-            </button>
-          </div>
-        )}
+            ) : (
+              <svg
+                className="w-7 h-7"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}
-       
-        
-      {isMenuOpen && !lopop &&  (
-        <div className="absolute z-40 w-full px-5 py-5 text-white transition-all duration-500 ease-in-out bg-black opacity-90 rounded-xl lg:hidden">
-          <button className="absolute text-white top-4 right-4" onClick={() => { setIsMenuOpen(false); setIconshow(true); }}>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
+      {isMenuOpen && (
+        <nav className="lg:hidden bg-white/95 backdrop-blur-md px-6 py-6 border-t border-gray-200 shadow-md">
+          <ul className="flex flex-col gap-6 text-center">
+            {navLinks.map(({ to, label }) => (
+              <Link
+                key={to}
+                to={to}
+                smooth
+                duration={400}
+                spy
+                offset={-60}
+                onClick={closeMenu}
+                activeClass="text-teal-600 font-semibold"
+                className="text-gray-900 text-lg cursor-pointer hover:text-teal-600 transition"
+              >
+                {label}
+              </Link>
+            ))}
 
-          <ul className="flex flex-col items-center py-4 uppercase">
-            <li className="py-2"><a href = "#header" className="cursor-pointer hover:text-gray-400">Home</a></li>
-            <li className="py-2"><a href="#about" className="cursor-pointer hover:text-gray-400">About</a></li>
-            <li className="py-2"><a href="#contact" className="cursor-pointer hover:text-gray-400">Contact Us</a></li>
-            <li className="py-2"><a href="#services" className="cursor-pointer hover:text-gray-400">Services</a></li>
-          </ul>
-
-          <div className='flex justify-center gap-4'>
-            <button className='px-6 py-2 font-semibold text-gray-800 uppercase bg-white rounded-full hover:bg-gray-200' onClick={openLogin}>
-              Signin
-            </button>
            
-          </div>
-        </div>
+          </ul>
+        </nav>
       )}
-
-      {/* Modals */}
-      {lopop && <Login closeLogin={closeModals} />}
-     
-
-
-      
-     </div>
+    </header>
   );
 }
 
