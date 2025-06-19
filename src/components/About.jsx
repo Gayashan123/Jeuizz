@@ -3,7 +3,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 import MissionImage from "../assets/Mission.jpg";
-import VisionImage from "../assets/Vision.jpg";
+import VisionImage from "../assets/vision.jpg";
 import StoryImage from "../assets/About.jpg";
 
 function About() {
